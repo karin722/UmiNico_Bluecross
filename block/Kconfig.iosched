@@ -51,6 +51,7 @@ config CFQ_GROUP_IOSCHED
 	---help---
 	  Enable group IO scheduling in CFQ.
 
+<<<<<<< HEAD
 config IOSCHED_FIOPS
 	tristate "IOPS based I/O scheduler"
 	default y
@@ -58,6 +59,15 @@ config IOSCHED_FIOPS
 	  This is an IOPS based I/O scheduler. It will try to distribute
           IOPS equally among all processes in the system. It's mainly for
           Flash based storage.
+=======
+
+config IOSCHED_ZEN
+	tristate "Zen I/O scheduler"
+	default y
+	---help---
+	FCFS, dispatches are back-inserted, deadlines ensure fairness.
+        Should work best with devices where there is no travel delay.
+>>>>>>> 652bbb12fd2c... block: add zen IO scheduler
 
 choice
 	prompt "Default I/O scheduler"
@@ -78,6 +88,9 @@ choice
 	config DEFAULT_FIOPS
 		bool "FIOPS" if IOSCHED_FIOPS=y
 
+	config DEFAULT_ZEN
+		bool "ZEN" if IOSCHED_ZEN=y
+
 	config DEFAULT_NOOP
 		bool "No-op"
 
@@ -89,6 +102,7 @@ config DEFAULT_IOSCHED
 	default "tripndroid" if DEFAULT_TRIPNDROID
 	default "cfq" if DEFAULT_CFQ
 	default "fiops" if DEFAULT_FIOPS
+	default "zen" if DEFAULT_ZEN
 	default "noop" if DEFAULT_NOOP
 	default "maple" if DEFAULT_MAPLE
 
